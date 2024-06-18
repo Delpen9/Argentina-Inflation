@@ -115,8 +115,8 @@ def get_currency_valuation_by_region(
 
 
 def get_currency_valuation_by_region_excluding_argentina(
-    filename: str = "cpi_inflation_data.csv",
-    output_file_path: str = "outputs/currency_valuation_over_time_excluding_argentina.png",
+    filename: str = "../inputs/cpi_inflation_data.csv",
+    output_file_path: str = "../outputs/outputs/currency_valuation_over_time_excluding_argentina.png",
 ) -> None:
     df_cpi = pd.read_csv(filename)
 
