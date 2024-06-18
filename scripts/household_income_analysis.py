@@ -7,10 +7,10 @@ import matplotlib.ticker as ticker
 import seaborn as sns
 
 def plot_household_income(
-    filename: str = "../inputs/per_capita_income_in_argentina.csv",
+    input_filename: str = "../inputs/per_capita_income_in_argentina.csv",
     output_file_path: str = "../outputs/household_purchasing_power_in_argentina.png"
 ) -> None:
-    df_cpi = pd.read_csv(filename)
+    df_cpi = pd.read_csv(input_filename)
 
     years = df_cpi["Year"]
     argentina = df_cpi["Per Capita Income (USD)"]

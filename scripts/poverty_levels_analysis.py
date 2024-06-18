@@ -7,10 +7,10 @@ import matplotlib.ticker as ticker
 import seaborn as sns
 
 def plot_poverty_levels(
-    filename: str = "../inputs/argentina-poverty-levels.csv",
+    input_filename: str = "../inputs/argentina-poverty-levels.csv",
     output_file_path: str = "../outputs/argentina_poverty_levels.png"
 ) -> None:
-    df_cpi = pd.read_csv(filename)
+    df_cpi = pd.read_csv(input_filename)
 
     years = df_cpi["Year"]
     argentina = df_cpi["% Under US $5.50 Per Day"]

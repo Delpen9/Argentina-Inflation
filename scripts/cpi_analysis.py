@@ -6,12 +6,11 @@ from matplotlib.ticker import ScalarFormatter
 import matplotlib.ticker as ticker
 import seaborn as sns
 
-
 def plot_cpi_df_cpi(
-    filename: str = "cpi_inflation_data.csv",
-    output_file_path: str = "outputs/cpi_display_lineplot.png",
+    input_filename: str = "../inputs/cpi_inflation_data.csv",
+    output_file_path: str = "../outputs/cpi_display_lineplot.png",
 ) -> None:
-    df_cpi = pd.read_csv(filename)
+    df_cpi = pd.read_csv(input_filename)
 
     # Calculate the rolling average over 5 years
     df_cpi["Argentina"] = df_cpi["Argentina"].rolling(window=5).mean()
@@ -53,10 +52,10 @@ def plot_cpi_df_cpi(
 
 
 def get_currency_valuation_by_region(
-    filename: str = "cpi_inflation_data.csv",
-    output_file_path: str = "outputs/currency_valuation_over_time.png",
+    input_filename: str = "../inputs/cpi_inflation_data.csv",
+    output_file_path: str = "../outputs/currency_valuation_over_time.png",
 ) -> None:
-    df_cpi = pd.read_csv(filename)
+    df_cpi = pd.read_csv(input_filename)
 
     # Get inflation values for cumprod()
     df_cpi["Argentina Yearly Inflation"] = 1 + (df_cpi["Argentina"] / 100)
@@ -115,10 +114,10 @@ def get_currency_valuation_by_region(
 
 
 def get_currency_valuation_by_region_excluding_argentina(
-    filename: str = "../inputs/cpi_inflation_data.csv",
-    output_file_path: str = "../outputs/outputs/currency_valuation_over_time_excluding_argentina.png",
+    input_filename: str = "../inputs/cpi_inflation_data.csv",
+    output_file_path: str = "../outputs/currency_valuation_over_time_excluding_argentina.png",
 ) -> None:
-    df_cpi = pd.read_csv(filename)
+    df_cpi = pd.read_csv(input_filename)
 
     # Get inflation values for cumprod()
     # df_cpi["Argentina Yearly Inflation"] = 1 + (df_cpi["Argentina"] / 100)
