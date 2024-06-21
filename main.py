@@ -1,5 +1,5 @@
 from scripts.cpi_analysis import (
-    plot_cpi_df_cpi,
+    plot_cpi_inflation,
     get_currency_valuation_by_region,
     get_currency_valuation_by_region_excluding_argentina,
 )
@@ -22,7 +22,7 @@ from scripts.fiscal_deficit_analysis import (
 )
 
 if __name__ == "__main__":
-    plot_cpi_df_cpi(
+    plot_cpi_inflation(
         input_filename="inputs/cpi_inflation_data.csv",
         output_file_path="outputs/cpi_display_lineplot.png",
     )

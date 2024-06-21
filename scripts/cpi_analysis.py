@@ -6,7 +6,7 @@ from matplotlib.ticker import ScalarFormatter
 import matplotlib.ticker as ticker
 import seaborn as sns
 
-def plot_cpi_df_cpi(
+def plot_cpi_inflation(
     input_filename: str = "../inputs/cpi_inflation_data.csv",
     output_file_path: str = "../outputs/cpi_display_lineplot.png",
 ) -> None:
@@ -174,6 +174,6 @@ def get_currency_valuation_by_region_excluding_argentina(
 
 
 if __name__ == "__main__":
-    plot_cpi_df_cpi()
+    plot_cpi_inflation()
     get_currency_valuation_by_region()
     get_currency_valuation_by_region_excluding_argentina()
