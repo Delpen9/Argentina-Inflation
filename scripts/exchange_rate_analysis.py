@@ -41,7 +41,6 @@ def plot_exchange_rate_over_time(
     plt.tight_layout()
 
     plt.savefig(output_file_path)
-    return None
 
 
 if __name__ == "__main__":

@@ -12,14 +12,16 @@ from scripts.poverty_levels_analysis import (
     plot_poverty_levels,
 )
 
-from scripts.gross_domestic_product_analysis import (
-    plot_inflation_adjusted_gdp
-)
+from scripts.gross_domestic_product_analysis import plot_inflation_adjusted_gdp
 
 from scripts.fiscal_deficit_analysis import (
     plot_fiscal_deficit_as_perc_of_gdp,
     plot_cumulative_fiscal_deficit,
 )
+
+from scripts.fertility_rate_analysis import plot_fertility_rate_over_time
+
+from scripts.exchange_rate_analysis import plot_exchange_rate_over_time
 
 if __name__ == "__main__":
     plot_cpi_inflation(
@@ -59,4 +61,14 @@ if __name__ == "__main__":
     plot_cumulative_fiscal_deficit(
         input_filename="inputs/argentina_fiscal_deficit.csv",
         output_file_path="outputs/cumulative_fiscal_deficit_lineplot.png",
+    )
+
+    plot_fertility_rate_over_time(
+        input_filename="inputs/fertility_rate_data_worldwide.csv",
+        output_file_path="outputs/fertility_rate_over_time.png",
+    )
+
+    plot_exchange_rate_over_time(
+        input_filename="inputs/argentine_peso_to_usd_exchange_rate.csv",
+        output_file_path="outputs/exchange_rate_over_time.png",
     )

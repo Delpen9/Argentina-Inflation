@@ -6,14 +6,17 @@ from matplotlib.ticker import ScalarFormatter
 import matplotlib.ticker as ticker
 import seaborn as sns
 
+import warnings
+
+# Suppress specific warnings
+warnings.filterwarnings("ignore", category=UserWarning, message="Attempt to set non-positive ylim on a log-scaled axis will be ignored.")
+warnings.filterwarnings("ignore", category=pd.errors.SettingWithCopyWarning)
 
 def plot_fertility_rate_over_time(
     input_filename: str = "../inputs/fertility_rate_data_worldwide.csv",
     output_file_path: str = "../outputs/fertility_rate_over_time.png",
 ) -> None:
     df_fertility_rates = pd.read_csv(input_filename)
-
-    print(df_fertility_rates.columns)
 
     df_argentina_fertility_rates = df_fertility_rates.loc[
         df_fertility_rates["Country Name"] == "Argentina"
@@ -71,7 +74,6 @@ def plot_fertility_rate_over_time(
     plt.tight_layout()
 
     plt.savefig(output_file_path)
-    return None
 
 
 if __name__ == "__main__":
