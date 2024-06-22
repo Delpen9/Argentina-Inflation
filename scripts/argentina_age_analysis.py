@@ -29,9 +29,9 @@ def plot_age_demographics_over_time(
     for i, col in enumerate(age_columns):
         plt.bar(positions + i * bar_width, df_argentina_ages[col], bar_width, label=col)
 
-    plt.xlabel("Year")
-    plt.ylabel(r"% of Population")
-    plt.title("Argentina Age Demographics Over Time")
+    plt.xlabel("Year", fontsize=20, fontweight='bold')
+    plt.ylabel(r"% of Population", fontsize=20, fontweight='bold')
+    plt.title("Argentina Age Demographics Over Time", fontsize=20, fontweight='bold')
     plt.xticks(positions + bar_width * (len(age_columns) / 2), df_argentina_ages['Years'])
     plt.legend()
 

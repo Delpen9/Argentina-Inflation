@@ -26,8 +26,8 @@ def plot_household_income(
 
     # Enhancing plot aesthetics
     plt.title("Argentina Per Capita Income (USD) Over Time", fontsize=20, fontweight='bold')
-    plt.xlabel("Year", fontsize=14, fontweight='bold')
-    plt.ylabel("Per Capita Income (USD)", fontsize=14, fontweight='bold')
+    plt.xlabel("Year", fontsize=20, fontweight='bold')
+    plt.ylabel("Per Capita Income (USD)", fontsize=20, fontweight='bold')
     plt.legend(fontsize=12)
     plt.grid(True, which="both", ls="--", lw=0.5, color='gray')
     plt.xticks(rotation=45, fontsize=12)

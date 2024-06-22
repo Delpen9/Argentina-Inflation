@@ -25,9 +25,9 @@ def plot_export_percent_over_time(
     plt.gca().yaxis.set_major_formatter(ScalarFormatter())
     plt.gca().yaxis.get_major_formatter().set_scientific(False)
 
-    plt.title("Export as Percent of GDP Over Time")
-    plt.xlabel("Year")
-    plt.ylabel(r"% of GDP Being Exports")
+    plt.title("Export as Percent of GDP Over Time", fontsize=20, fontweight='bold')
+    plt.xlabel("Year", fontsize=20, fontweight='bold')
+    plt.ylabel(r"% of GDP Being Exports", fontsize=20, fontweight='bold')
     plt.legend()
 
     plt.grid(True, which="both", ls="--")
@@ -35,7 +35,6 @@ def plot_export_percent_over_time(
     plt.tight_layout()
 
     plt.savefig(output_file_path)
-    return None
 
 
 if __name__ == "__main__":

@@ -39,9 +39,9 @@ def plot_cpi_inflation(
     plt.gca().yaxis.set_major_formatter(ScalarFormatter())
     plt.gca().yaxis.get_major_formatter().set_scientific(False)
 
-    plt.title("Inflation Rates Over Time (5-Year Rolling Average)")
-    plt.xlabel("Year")
-    plt.ylabel("Inflation %")
+    plt.title("Inflation Rates Over Time (5-Year Rolling Average)", fontsize=20, fontweight='bold')
+    plt.xlabel("Year", fontsize=20, fontweight='bold')
+    plt.ylabel("Inflation %", fontsize=20, fontweight='bold')
     plt.legend()
 
     plt.grid(True, which="both", ls="--")
@@ -101,9 +101,9 @@ def get_currency_valuation_by_region(
         ticker.FuncFormatter(lambda x, pos: "{:,.0f}".format(x))
     )
 
-    plt.title("Amount of Currency Needed to Equal 1 of the Currency in 1979")
-    plt.xlabel("Year")
-    plt.ylabel("Amount Needed")
+    plt.title("Amount of Currency Needed to Equal 1 of the Currency in 1979", fontsize=20, fontweight='bold')
+    plt.xlabel("Year", fontsize=20, fontweight='bold')
+    plt.ylabel("Amount Needed", fontsize=20, fontweight='bold')
     plt.legend()
 
     plt.grid(True, which="both", ls="--")
@@ -161,9 +161,9 @@ def get_currency_valuation_by_region_excluding_argentina(
         ticker.FuncFormatter(lambda x, pos: "{:,.0f}".format(x))
     )
 
-    plt.title("Amount of Currency Needed to Equal 1 of the Currency in 1979")
-    plt.xlabel("Year")
-    plt.ylabel("Amount Needed")
+    plt.title("Amount of Currency Needed to Equal 1 of the Currency in 1979", fontsize=20, fontweight='bold')
+    plt.xlabel("Year", fontsize=20, fontweight='bold')
+    plt.ylabel("Amount Needed", fontsize=20, fontweight='bold')
     plt.legend()
 
     plt.grid(True, which="both", ls="--")

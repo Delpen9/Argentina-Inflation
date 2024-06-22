@@ -64,9 +64,9 @@ def plot_fertility_rate_over_time(
     plt.gca().yaxis.set_major_formatter(ScalarFormatter())
     plt.gca().yaxis.get_major_formatter().set_scientific(False)
 
-    plt.title("Fertility Rate Over Time")
-    plt.xlabel("Year")
-    plt.ylabel("Fertility Rate")
+    plt.title("Fertility Rate Over Time", fontsize=20, fontweight='bold')
+    plt.xlabel("Year", fontsize=20, fontweight='bold')
+    plt.ylabel("Fertility Rate", fontsize=20, fontweight='bold')
     plt.legend()
 
     plt.grid(True, which="both", ls="--")

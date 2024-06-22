@@ -25,9 +25,9 @@ def plot_fiscal_deficit_as_perc_of_gdp(
     plt.gca().yaxis.set_major_formatter(ScalarFormatter())
     plt.gca().yaxis.get_major_formatter().set_scientific(False)
 
-    plt.title(f"Argentina Fiscal Deficit by Year (% of GDP); Negative is BAD")
-    plt.xlabel("Year")
-    plt.ylabel("Fiscal Deficit (%)")
+    plt.title(f"Argentina Fiscal Deficit by Year (% of GDP); Negative is BAD", fontsize=20, fontweight='bold')
+    plt.xlabel("Year", fontsize=20, fontweight='bold')
+    plt.ylabel("Fiscal Deficit (%)", fontsize=20, fontweight='bold')
     plt.legend()
 
     plt.grid(True, which="both", ls="--")
@@ -58,9 +58,9 @@ def plot_cumulative_fiscal_deficit(
     plt.gca().yaxis.set_major_formatter(ScalarFormatter())
     plt.gca().yaxis.get_major_formatter().set_scientific(False)
 
-    plt.title("Argentina Cumulative Fiscal Deficit by Year ($B)")
-    plt.xlabel("Year")
-    plt.ylabel("Fiscal Deficit ($B)")
+    plt.title("Argentina Cumulative Fiscal Deficit by Year ($B)", fontsize=20, fontweight='bold')
+    plt.xlabel("Year", fontsize=20, fontweight='bold')
+    plt.ylabel("Fiscal Deficit ($B)", fontsize=20, fontweight='bold')
     plt.legend()
 
     plt.grid(True, which="both", ls="--")

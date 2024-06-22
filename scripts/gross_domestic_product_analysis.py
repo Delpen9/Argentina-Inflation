@@ -51,9 +51,9 @@ def plot_inflation_adjusted_gdp(
     plt.gca().yaxis.set_major_formatter(ScalarFormatter())
     plt.gca().yaxis.get_major_formatter().set_scientific(False)
 
-    plt.title("Argentina Gross Domestic Product per Capita by Year (USD)")
-    plt.xlabel("Year")
-    plt.ylabel("USD")
+    plt.title("Argentina Gross Domestic Product per Capita by Year (USD)", fontsize=20, fontweight='bold')
+    plt.xlabel("Year", fontsize=20, fontweight='bold')
+    plt.ylabel("USD", fontsize=20, fontweight='bold')
     plt.legend()
 
     plt.grid(True, which="both", ls="--")

@@ -26,8 +26,8 @@ def plot_poverty_levels(
 
     # Enhancing plot aesthetics
     plt.title("Argentina Poverty Levels as % Under US $5.50 Per Day", fontsize=20, fontweight='bold')
-    plt.xlabel("Year", fontsize=14, fontweight='bold')
-    plt.ylabel("% Under US $5.50 Per Day (Adjusted for USD 2011)", fontsize=14, fontweight='bold')
+    plt.xlabel("Year", fontsize=20, fontweight='bold')
+    plt.ylabel("% Under US $5.50 Per Day (Adjusted for USD 2011)", fontsize=20, fontweight='bold')
     plt.legend(fontsize=12)
     plt.grid(True, which="both", ls="--", lw=0.5, color='gray')
     plt.xticks(rotation=45, fontsize=12)
