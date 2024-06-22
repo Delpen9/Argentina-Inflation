@@ -23,6 +23,8 @@ from scripts.fertility_rate_analysis import plot_fertility_rate_over_time
 
 from scripts.exchange_rate_analysis import plot_exchange_rate_over_time
 
+from scripts.argentina_age_analysis import plot_age_demographics_over_time
+
 if __name__ == "__main__":
     plot_cpi_inflation(
         input_filename="inputs/cpi_inflation_data.csv",
@@ -71,4 +73,9 @@ if __name__ == "__main__":
     plot_exchange_rate_over_time(
         input_filename="inputs/argentine_peso_to_usd_exchange_rate.csv",
         output_file_path="outputs/exchange_rate_over_time.png",
+    )
+
+    plot_age_demographics_over_time(
+        input_filename="inputs/argentina_age_demographic.csv",
+        output_file_path="outputs/argentina_age_demographics_over_time.png",
     )
