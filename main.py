@@ -134,7 +134,7 @@ def create_powerpoint(output_files: str, presentation_path: str) -> None:
     # Define maximum dimensions for the images
     max_height = Inches(5.5)
     max_width = prs.slide_width - Inches(2)
-    top_offset = Inches(0.0)  # Offset to lower the images slightly
+    top_offset = Inches(1.0)  # Offset to lower the images slightly
 
     # Add slides for each PNG file
     for file in output_files:
