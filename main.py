@@ -131,6 +131,10 @@ def create_powerpoint(output_files: str, presentation_path: str) -> None:
     title.text = "Argentina Economic and Demographic Analysis"
     subtitle.text = "Generated Visualizations"
 
+    # Define maximum dimensions for the images
+    max_height = Inches(5.5)
+    max_width = prs.slide_width - Inches(2)
+
     # Add slides for each PNG file
     for file in output_files:
         slide_layout = prs.slide_layouts[5]  # Use a blank slide layout
@@ -139,20 +143,25 @@ def create_powerpoint(output_files: str, presentation_path: str) -> None:
         title_shape.text = (
             file.split("/")[-1].replace("_", " ").replace(".png", "").title()
         )
-        left = Inches(1)
-        top = Inches(1.5)
-        height = Inches(5.5)
-
+        
         # Get the image size to maintain aspect ratio
         img = Image.open(file)
-        width, img_height = img.size
-        aspect_ratio = width / img_height
-        width = height * aspect_ratio
+        img_width, img_height = img.size
+        aspect_ratio = img_width / img_height
+
+        # Calculate dimensions while maintaining aspect ratio
+        width = max_height * aspect_ratio
+        height = max_height
+
+        if width > max_width:
+            width = max_width
+            height = max_width / aspect_ratio
 
         # Center the image horizontally
         left = (prs.slide_width - width) / 2
+        top = Inches(1.5)
 
-        pic = slide.shapes.add_picture(file, left, top, height=height, width=width * 0.75)
+        pic = slide.shapes.add_picture(file, left, top, height=height, width=width)
 
     # Save the presentation
     prs.save(presentation_path)
