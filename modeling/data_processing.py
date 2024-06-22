@@ -204,25 +204,34 @@ def construct_training_data() -> None:
     ############################################################################
     ## Combine Data
     ############################################################################
-    # all_argentina_data = [
-    #     df_argentina_ages,
-    #     df_cpi,
-    #     df_exchange_rate,
-    #     df_export_perc,
-    #     df_fertility,
-    #     df_fiscal_deficit,
-    #     df_gdp,
-    #     df_per_capita_income,
-    #     df_argentina_poverty,
-    # ]
+    # List of dataframes to be merged
+    dfs = [
+        df_argentina_ages,
+        df_exchange_rate,
+        df_export_perc,
+        df_fertility,
+        df_fiscal_deficit,
+        df_gdp,
+        df_per_capita_income,
+        df_argentina_poverty,
+    ]
 
-    # # Merge all DataFrames on the "Years" column
-    # df_merged = reduce(
-    #     lambda left, right: pd.merge(left, right, on="Years", how="inner"),
-    #     all_argentina_data,
-    # )
+    # Initialize the final dataframe with the first dataframe in the list
+    df_final = dfs[0]
 
-    # df_merged.to_csv("training_data.csv")
+    # Loop through the remaining dataframes and merge them
+    for df in dfs[1:]:
+        df_final = pd.merge(df_final, df, on="Years", how="outer")
+
+    # Filter the rows and reset the index
+    df_final = df_final.loc[
+        (df_final["Years"] >= 1980) & (df_final["Years"] <= 2022)
+    ].reset_index(drop=True)
+
+    df_final = df_final.ffill().bfill()
+
+    # Save the final dataframe to a CSV file
+    df_final.to_csv("training_data.csv", index=False)
     ############################################################################
     ############################################################################
 
