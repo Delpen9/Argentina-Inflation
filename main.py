@@ -126,6 +126,14 @@ def create_powerpoint(output_files: str, presentation_path: str) -> None:
     # Create a PowerPoint presentation object
     prs = Presentation()
 
+    # Add a title slide
+    slide_layout = prs.slide_layouts[0]
+    slide = prs.slides.add_slide(slide_layout)
+    title = slide.shapes.title
+    subtitle = slide.placeholders[1]
+    title.text = "Argentina Economic and Demographic Analysis"
+    subtitle.text = "Generated Visualizations"
+
     # Add Bible verse slides
     bible_verses = [
         {
@@ -158,6 +166,14 @@ def create_powerpoint(output_files: str, presentation_path: str) -> None:
     def add_verses_slide(prs, verses):
         slide_layout = prs.slide_layouts[5]  # Use a blank slide layout
         slide = prs.slides.add_slide(slide_layout)
+
+        # Remove the title placeholder if it exists
+        for shape in slide.shapes:
+            if not shape.has_text_frame:
+                continue
+            if shape.text_frame.text == "Click to add title":
+                sp = shape
+                slide.shapes._spTree.remove(sp._element)
 
         top = Inches(1)
         left = Inches(1)
