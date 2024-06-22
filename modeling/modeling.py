@@ -2,6 +2,13 @@ import pandas as pd
 import numpy as np
 from statsmodels.tsa.arima.model import ARIMA
 from statsmodels.tsa.stattools import adfuller
+import xgboost as xgb
+from sklearn.model_selection import train_test_split
+
+# Monkey patch
+np.float_ = np.float64
+from prophet import Prophet
+
 import matplotlib.pyplot as plt
 import itertools
 
@@ -52,7 +59,7 @@ def find_best_arima_order(series):
     return best_order
 
 
-def forecast_poverty_levels(
+def forecast_poverty_levels_using_arima(
     data_path, target_column, forecast_years=10, confidence_interval=0.95
 ):
     # Load your data into a DataFrame
@@ -117,7 +124,7 @@ def forecast_poverty_levels(
     plt.xlabel("Years")
     plt.ylabel(target)
     plt.legend()
-    plt.savefig("modeling_prediction.png")
+    plt.savefig("modeling_prediction_arima.png")
 
     # Save the results to CSV
     forecast_df = pd.DataFrame(
@@ -128,10 +135,60 @@ def forecast_poverty_levels(
             "Upper CI": boot_conf_int[1],
         }
     )
-    forecast_df.to_csv("forecasted_poverty_levels.csv", index=False)
+    forecast_df.to_csv("forecasted_poverty_levels_arima.csv", index=False)
 
+
+def forecast_poverty_levels_using_prophet(data_path, target_column, forecast_years=10):
+    # Load your data into a DataFrame
+    data = pd.read_csv(data_path)
+
+    # Ensure 'Years' is treated as integers
+    data["Years"] = pd.to_numeric(data["Years"], errors="coerce")
+
+    # Rename columns for Prophet
+    data = data.rename(columns={"Years": "ds", target_column: "y"})
+    data["ds"] = pd.to_datetime(data["ds"], format="%Y")
+
+    # Initialize the model with enhanced parameters
+    model = Prophet(
+        changepoint_prior_scale=3.45e-2,  # Adjust to make the model more flexible with changepoints
+        seasonality_mode='multiplicative'  # Change to 'additive' if necessary
+    )
+
+    # Add custom seasonalities if needed
+    model.add_seasonality(name='yearly', period=365.25, fourier_order=10)
+
+    # Fit the model
+    model.fit(data)
+
+    # Create future dataframe
+    future = model.make_future_dataframe(periods=forecast_years, freq="Y")
+
+    # Forecast
+    forecast = model.predict(future)
+
+    # Plot the results
+    model.plot(forecast)
+    plt.title("Poverty Levels Forecast")
+    plt.xlabel("Years")
+    plt.ylabel(target_column)
+    plt.grid(True, which="both", ls="--")
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.savefig("modeling_prediction_prophet.png")
+
+    # Plot the forecast components
+    model.plot_components(forecast)
+    plt.tight_layout()
+    plt.savefig("modeling_prediction_prophet_components.png")
+
+    # Save the results to CSV
+    forecast[["ds", "yhat", "yhat_lower", "yhat_upper"]].to_csv(
+        "forecasted_poverty_levels_prophet.csv", index=False
+    )
 
 if __name__ == "__main__":
     data_path = "training_data.csv"
     target_column = "% Under US $5.50 Per Day"
-    forecast_poverty_levels(data_path, target_column)
+    forecast_poverty_levels_using_arima(data_path, target_column)
+    forecast_poverty_levels_using_prophet(data_path, target_column)
