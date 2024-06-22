@@ -126,46 +126,67 @@ def create_powerpoint(output_files: str, presentation_path: str) -> None:
     # Create a PowerPoint presentation object
     prs = Presentation()
 
-    # Add a title slide
-    slide_layout = prs.slide_layouts[0]
-    slide = prs.slides.add_slide(slide_layout)
-    title = slide.shapes.title
-    subtitle = slide.placeholders[1]
-    title.text = "Argentina Economic and Demographic Analysis"
-    subtitle.text = "Generated Visualizations"
-
     # Add Bible verse slides
     bible_verses = [
         {
             "verse": "For where your treasure is, there your heart will be also.",
-            "reference": "Matthew 6:21"
+            "reference": "Matthew 6:21",
         },
         {
             "verse": "The rich rule over the poor, and the borrower is slave to the lender.",
-            "reference": "Proverbs 22:7"
-        }
+            "reference": "Proverbs 22:7",
+        },
+        {
+            "verse": "Honor the Lord with your wealth, with the firstfruits of all your crops.",
+            "reference": "Proverbs 3:9",
+        },
+        {
+            "verse": "Keep your lives free from the love of money and be content with what you have, because God has said, 'Never will I leave you; never will I forsake you.'",
+            "reference": "Hebrews 13:5",
+        },
+        {
+            "verse": "One person gives freely, yet gains even more; another withholds unduly, but comes to poverty.",
+            "reference": "Proverbs 11:24",
+        },
+        {
+            "verse": "Whoever loves money never has enough; whoever loves wealth is never satisfied with their income. This too is meaningless.",
+            "reference": "Ecclesiastes 5:10",
+        },
     ]
 
-    for verse in bible_verses:
+    # Function to add verses to a slide
+    def add_verses_slide(prs, verses):
         slide_layout = prs.slide_layouts[5]  # Use a blank slide layout
         slide = prs.slides.add_slide(slide_layout)
 
-        text_box = slide.shapes.add_textbox(Inches(1), Inches(1), prs.slide_width - Inches(2), prs.slide_height - Inches(2))
-        text_frame = text_box.text_frame
+        top = Inches(1)
+        left = Inches(1)
+        width = prs.slide_width - Inches(2)
+        height = prs.slide_height - Inches(2)
 
-        p = text_frame.add_paragraph()
-        p.text = verse["verse"]
-        p.font.size = Pt(28)
-        p.font.bold = True
-        p.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
-        p.alignment = PP_ALIGN.CENTER
+        for verse in verses:
+            text_box = slide.shapes.add_textbox(left, top, width, height)
+            text_frame = text_box.text_frame
 
-        p = text_frame.add_paragraph()
-        p.text = verse["reference"]
-        p.font.size = Pt(24)
-        p.font.italic = True
-        p.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
-        p.alignment = PP_ALIGN.CENTER
+            p = text_frame.add_paragraph()
+            p.text = verse["verse"]
+            p.font.size = Pt(20)
+            p.font.bold = True
+            p.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
+            p.alignment = PP_ALIGN.LEFT
+
+            p = text_frame.add_paragraph()
+            p.text = verse["reference"]
+            p.font.size = Pt(16)
+            p.font.italic = True
+            p.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
+            p.alignment = PP_ALIGN.RIGHT
+
+            top += Inches(1.5)  # Adjust the spacing between verses
+
+    # Add the first two slides with three verses each
+    add_verses_slide(prs, bible_verses[:3])
+    add_verses_slide(prs, bible_verses[3:])
 
     # Define maximum dimensions for the images
     max_height = Inches(5.5)
@@ -182,7 +203,7 @@ def create_powerpoint(output_files: str, presentation_path: str) -> None:
 
         # Capitalize specific terms
         title_text = title_text.replace("Gdp", "GDP").replace("Cpi", "CPI")
-        
+
         title_shape.text = title_text
 
         # Get the image size to maintain aspect ratio
