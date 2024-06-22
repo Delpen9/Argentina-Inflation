@@ -1,5 +1,7 @@
 from pptx import Presentation
 from pptx.util import Inches
+from PIL import Image
+
 from scripts.cpi_analysis import (
     plot_cpi_inflation,
     get_currency_valuation_by_region,
@@ -19,36 +21,7 @@ from scripts.general_population_stats_analysis import plot_general_population_st
 from scripts.export_analysis import plot_export_percent_over_time
 
 
-def create_powerpoint(output_files, presentation_path):
-    # Create a PowerPoint presentation object
-    prs = Presentation()
-
-    # Add a title slide
-    slide_layout = prs.slide_layouts[0]
-    slide = prs.slides.add_slide(slide_layout)
-    title = slide.shapes.title
-    subtitle = slide.placeholders[1]
-    title.text = "Argentina Economic and Demographic Analysis"
-    subtitle.text = "Generated Visualizations"
-
-    # Add slides for each PNG file
-    for file in output_files:
-        slide_layout = prs.slide_layouts[5]  # Use a blank slide layout
-        slide = prs.slides.add_slide(slide_layout)
-        title_shape = slide.shapes.title
-        title_shape.text = (
-            file.split("/")[-1].replace("_", " ").replace(".png", "").title()
-        )
-        left = Inches(1)
-        top = Inches(1.5)
-        height = Inches(5.5)
-        pic = slide.shapes.add_picture(file, left, top, height=height)
-
-    # Save the presentation
-    prs.save(presentation_path)
-
-
-if __name__ == "__main__":
+def generate_plots_and_collect_filenames():
     output_files = []
 
     output_filename = "outputs/cpi_display_lineplot.png"
@@ -142,6 +115,51 @@ if __name__ == "__main__":
         input_filename="inputs/historical-argentina-exports.csv",
         output_file_path=output_filename,
     )
+
+    return output_files
+
+
+def create_powerpoint(output_files: str, presentation_path: str) -> None:
+    # Create a PowerPoint presentation object
+    prs = Presentation()
+
+    # Add a title slide
+    slide_layout = prs.slide_layouts[0]
+    slide = prs.slides.add_slide(slide_layout)
+    title = slide.shapes.title
+    subtitle = slide.placeholders[1]
+    title.text = "Argentina Economic and Demographic Analysis"
+    subtitle.text = "Generated Visualizations"
+
+    # Add slides for each PNG file
+    for file in output_files:
+        slide_layout = prs.slide_layouts[5]  # Use a blank slide layout
+        slide = prs.slides.add_slide(slide_layout)
+        title_shape = slide.shapes.title
+        title_shape.text = (
+            file.split("/")[-1].replace("_", " ").replace(".png", "").title()
+        )
+        left = Inches(1)
+        top = Inches(1.5)
+        height = Inches(5.5)
+
+        # Get the image size to maintain aspect ratio
+        img = Image.open(file)
+        width, img_height = img.size
+        aspect_ratio = width / img_height
+        width = height * aspect_ratio
+
+        # Center the image horizontally
+        left = (prs.slide_width - width) / 2
+
+        pic = slide.shapes.add_picture(file, left, top, height=height, width=width)
+
+    # Save the presentation
+    prs.save(presentation_path)
+
+
+if __name__ == "__main__":
+    output_files = generate_plots_and_collect_filenames()
 
     # Create the PowerPoint presentation
     create_powerpoint(output_files, "argentina_analysis_presentation.pptx")
