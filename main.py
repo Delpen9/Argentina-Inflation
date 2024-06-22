@@ -134,6 +134,7 @@ def create_powerpoint(output_files: str, presentation_path: str) -> None:
     # Define maximum dimensions for the images
     max_height = Inches(5.5)
     max_width = prs.slide_width - Inches(2)
+    top_offset = Inches(0.5)  # Offset to lower the images slightly
 
     # Add slides for each PNG file
     for file in output_files:
@@ -143,7 +144,7 @@ def create_powerpoint(output_files: str, presentation_path: str) -> None:
         title_shape.text = (
             file.split("/")[-1].replace("_", " ").replace(".png", "").title()
         )
-        
+
         # Get the image size to maintain aspect ratio
         img = Image.open(file)
         img_width, img_height = img.size
@@ -157,9 +158,9 @@ def create_powerpoint(output_files: str, presentation_path: str) -> None:
             width = max_width
             height = max_width / aspect_ratio
 
-        # Center the image horizontally
+        # Center the image horizontally and adjust the top position
         left = (prs.slide_width - width) / 2
-        top = Inches(1.5)
+        top = Inches(1.5) + top_offset
 
         pic = slide.shapes.add_picture(file, left, top, height=height, width=width)
 
