@@ -152,7 +152,7 @@ def create_powerpoint(output_files: str, presentation_path: str) -> None:
         # Center the image horizontally
         left = (prs.slide_width - width) / 2
 
-        pic = slide.shapes.add_picture(file, left, top, height=height, width=width)
+        pic = slide.shapes.add_picture(file, left, top, height=height, width=width * 0.75)
 
     # Save the presentation
     prs.save(presentation_path)
