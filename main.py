@@ -1,6 +1,9 @@
 from pptx import Presentation
-from pptx.util import Inches
+from pptx.util import Inches, Pt
 from PIL import Image
+from pptx.dml.color import RGBColor
+from pptx.enum.text import PP_ALIGN
+from pptx.util import Pt
 
 from scripts.cpi_analysis import (
     plot_cpi_inflation,
@@ -131,6 +134,39 @@ def create_powerpoint(output_files: str, presentation_path: str) -> None:
     title.text = "Argentina Economic and Demographic Analysis"
     subtitle.text = "Generated Visualizations"
 
+    # Add Bible verse slides
+    bible_verses = [
+        {
+            "verse": "For where your treasure is, there your heart will be also.",
+            "reference": "Matthew 6:21"
+        },
+        {
+            "verse": "The rich rule over the poor, and the borrower is slave to the lender.",
+            "reference": "Proverbs 22:7"
+        }
+    ]
+
+    for verse in bible_verses:
+        slide_layout = prs.slide_layouts[5]  # Use a blank slide layout
+        slide = prs.slides.add_slide(slide_layout)
+
+        text_box = slide.shapes.add_textbox(Inches(1), Inches(1), prs.slide_width - Inches(2), prs.slide_height - Inches(2))
+        text_frame = text_box.text_frame
+
+        p = text_frame.add_paragraph()
+        p.text = verse["verse"]
+        p.font.size = Pt(28)
+        p.font.bold = True
+        p.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
+        p.alignment = PP_ALIGN.CENTER
+
+        p = text_frame.add_paragraph()
+        p.text = verse["reference"]
+        p.font.size = Pt(24)
+        p.font.italic = True
+        p.font.color.rgb = RGBColor(0x00, 0x00, 0x00)
+        p.alignment = PP_ALIGN.CENTER
+
     # Define maximum dimensions for the images
     max_height = Inches(5.5)
     max_width = prs.slide_width - Inches(2)
@@ -141,9 +177,13 @@ def create_powerpoint(output_files: str, presentation_path: str) -> None:
         slide_layout = prs.slide_layouts[5]  # Use a blank slide layout
         slide = prs.slides.add_slide(slide_layout)
         title_shape = slide.shapes.title
-        title_shape.text = (
-            file.split("/")[-1].replace("_", " ").replace(".png", "").title()
-        )
+
+        title_text = file.split("/")[-1].replace("_", " ").replace(".png", "").title()
+
+        # Capitalize specific terms
+        title_text = title_text.replace("Gdp", "GDP").replace("Cpi", "CPI")
+        
+        title_shape.text = title_text
 
         # Get the image size to maintain aspect ratio
         img = Image.open(file)
