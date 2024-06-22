@@ -6,8 +6,6 @@ from matplotlib.ticker import ScalarFormatter
 import matplotlib.ticker as ticker
 import seaborn as sns
 
-from functools import reduce
-
 
 def construct_training_data() -> None:
     ############################################################################
@@ -204,7 +202,6 @@ def construct_training_data() -> None:
     ############################################################################
     ## Combine Data
     ############################################################################
-    # List of dataframes to be merged
     dfs = [
         df_argentina_ages,
         df_exchange_rate,
