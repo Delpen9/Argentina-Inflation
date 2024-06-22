@@ -160,7 +160,7 @@ def create_powerpoint(output_files: str, presentation_path: str) -> None:
 
         # Center the image horizontally and adjust the top position
         left = (prs.slide_width - width) / 2
-        top = Inches(0.5) + top_offset
+        top = Inches(1.5) + top_offset
 
         pic = slide.shapes.add_picture(file, left, top, height=height, width=width)
 
