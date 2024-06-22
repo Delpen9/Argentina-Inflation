@@ -270,7 +270,6 @@ def convert_pptx_to_pdf(pptx_path, pdf_path):
     )
     os.rename(converted_pdf, pdf_path)
 
-
 if __name__ == "__main__":
     output_files = generate_plots_and_collect_filenames()
 
