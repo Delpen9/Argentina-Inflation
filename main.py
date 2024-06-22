@@ -2,8 +2,11 @@ from pptx import Presentation
 from pptx.util import Inches, Pt
 from PIL import Image
 from pptx.dml.color import RGBColor
-from pptx.enum.text import PP_ALIGN
+from pptx.enum.text import PP_ALIGN, MSO_AUTO_SIZE
 from pptx.util import Pt
+
+import os
+import subprocess
 
 from scripts.cpi_analysis import (
     plot_cpi_inflation,
@@ -149,15 +152,15 @@ def create_powerpoint(output_files: str, presentation_path: str) -> None:
             "reference": "Proverbs 3:9",
         },
         {
-            "verse": "Keep your lives free from the love of money and be content with what you have, because God has said, 'Never will I leave you; never will I forsake you.'",
+            "verse": "Keep your lives free from the love of money and be content \n with what you have, because God has said, 'Never will I leave you; never will I forsake you.'",
             "reference": "Hebrews 13:5",
         },
         {
-            "verse": "One person gives freely, yet gains even more; another withholds unduly, but comes to poverty.",
+            "verse": "One person gives freely, yet gains even more; another withholds \n unduly, but comes to poverty.",
             "reference": "Proverbs 11:24",
         },
         {
-            "verse": "Whoever loves money never has enough; whoever loves wealth is never satisfied with their income. This too is meaningless.",
+            "verse": "Whoever loves money never has enough; whoever loves wealth is  \n never satisfied with their income. This too is meaningless.",
             "reference": "Ecclesiastes 5:10",
         },
     ]
@@ -183,6 +186,8 @@ def create_powerpoint(output_files: str, presentation_path: str) -> None:
         for verse in verses:
             text_box = slide.shapes.add_textbox(left, top, width, height)
             text_frame = text_box.text_frame
+            text_frame.word_wrap = True
+            text_frame.auto_size = MSO_AUTO_SIZE.TEXT_TO_FIT_SHAPE
 
             p = text_frame.add_paragraph()
             p.text = verse["verse"]
@@ -245,8 +250,34 @@ def create_powerpoint(output_files: str, presentation_path: str) -> None:
     prs.save(presentation_path)
 
 
+def convert_pptx_to_pdf(pptx_path, pdf_path):
+    # Command to convert pptx to pdf using LibreOffice
+    command = [
+        "libreoffice",
+        "--headless",
+        "--convert-to",
+        "pdf",
+        "--outdir",
+        os.path.dirname(pdf_path),
+        pptx_path,
+    ]
+
+    subprocess.run(command, check=True)
+
+    # Rename the converted file to the specified pdf_path
+    converted_pdf = os.path.join(
+        os.path.dirname(pdf_path), os.path.basename(pptx_path).replace(".pptx", ".pdf")
+    )
+    os.rename(converted_pdf, pdf_path)
+
+
 if __name__ == "__main__":
     output_files = generate_plots_and_collect_filenames()
 
     # Create the PowerPoint presentation
     create_powerpoint(output_files, "argentina_analysis_presentation.pptx")
+
+    # Convert PowerPoint to PDF
+    convert_pptx_to_pdf(
+        "argentina_analysis_presentation.pptx", "argentina_analysis_presentation.pdf"
+    )
